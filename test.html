@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="main_input" class="btn btn-primary">
+        <input type="text" id="prompt">
+        <button onclick="callGPTAPI()">Call Chat GPT</button>
+    </div>
+    <p id="results"></p>
+<script>
+    const prompt = document.getElementById('prompt');
+    const results = document.getElementById('results');
+
+    function callGPTAPI(){
+        // integerating chat gpt //
+        const options = {
+            method: 'POST',
+            headers: {
+                'content-type':'application/json',
+                'X-RapidAPI-Key':'918e48048fmsh78a5fedb146f662p1cad53jsn9165a9faaeea',
+                'X-RapidAPI-Host':'openai80.p.rapidapi.com'
+            },
+            body:`{"model":"gpt-3.5-turbo","messages":[{"role":"user","content":"${prompt.value}"}]}`
+        };
+        fetch('https://openai80.p.rapidapi.com/chat/completions',options)
+        .then((response)=>response.json())
+        .then((response)=>{
+            results.innerText = response.choices[0].message.content;
+        })
+        .catch((err)=>console.error(err));
+     }
+
+</script>  
+</body>
+</html>
